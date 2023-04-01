@@ -87,7 +87,8 @@ Customers has a one to many relationship with Reservations and Orders. A particu
 #This query allows us to know what ingredients go into each of the catering menu items. This is because the catering menu is created by the customer. Therefore, by being able to see what ingredients they have requested in the past, we can prepare for possible future catering needs. We did this by having the name of the meal and the ingredients in the select statement, and then ordered by 
 
 
-<img width="469" alt="Screen Shot 2023-03-31 at 9 51 40 PM" src="https://user-images.githubusercontent.com/129555704/229260282-9191a975-4696-4416-b76b-d4566d68027e.png">
+<img width="278" alt="Screen Shot 2023-03-31 at 9 54 09 PM" src="https://user-images.githubusercontent.com/129555704/229260352-b02a6e5c-3187-4504-afa7-699f6fb7cd61.png">
+
 
 
 
@@ -105,12 +106,8 @@ Customers has a one to many relationship with Reservations and Orders. A particu
 # Query 4
 #These are all of the customers that ate at the restaurant. Not all of our customers are from just the restaurant so it is useful to know which customers are soley eating at the restaurant rather than through catering or events. We did that by selecting the customers name so we know the names of which specific customers are eating there. Then we joined customers to restaurant and did an exist statement for restaurantID. If restaurantID does exist then that means that they ate at the restaurant.
 
-CREATE PROCEDURE TP_Q4()
-SELECT customerName
-FROM Customers
-JOIN Restaurant ON Customers.restaurantID = Restaurant.rId
-WHERE EXISTS (SELECT restaurantID FROM Customers);
-CALL TP_Q4;
+
+<img width="490" alt="Screen Shot 2023-03-31 at 9 56 30 PM" src="https://user-images.githubusercontent.com/129555704/229260373-93d42e0c-057e-4931-b0f3-71ac799e54d8.png">
 
 
 <img width="191" alt="Q4" src="https://user-images.githubusercontent.com/129557979/229248742-d12834cd-dd3b-48e4-87e6-d272ec173207.png">
@@ -118,12 +115,8 @@ CALL TP_Q4;
 # Query 5
 #This query tells us how many of each item is greater than the average price of the items on our menu. By doing this we can figure out which items are our more expensive items, and we can focus on trying to make those as high quality as we can. In order to find this out we counted how many total menu items there are on the menu. Then we did a subquery to find what the average menu price is and compared that to all of the menu items to find which items cost more than the average price.
 
-CREATE PROCEDURE TP_Q5()
-SELECT COUNT(*), menuItemName
-FROM Menu
-WHERE menuPrice > (SELECT AVG(menuPrice) FROM Menu)
-GROUP BY menuItemName;
-CALL TP_Q5;
+<img width="433" alt="Screen Shot 2023-03-31 at 9 57 06 PM" src="https://user-images.githubusercontent.com/129555704/229260396-a2f9a66b-e3ba-48ea-a3d5-8808d677e369.png">
+
 
 
 <img width="261" alt="Q5" src="https://user-images.githubusercontent.com/129557979/229248744-17404d3c-7bd9-4d09-b324-571f2d38d0e6.png">
@@ -131,14 +124,8 @@ CALL TP_Q5;
 # Query 6 
 #This query allows us to tell the amount of food that each employee sold. This is useful because from this we can tell how useful each employee is and how much money they are bringing in. We did this by getting the sum of the menu price multiplied by the quantity of the items they ordered. We then joined the employees table, orders table, and the menu table together so we could get the menu item and the price, combined with the order that was place, and which employee was involved.
 
-CREATE PROCEDURE TP_Q6()
-SELECT employeeName, SUM(menuPrice*orderQuantity) AS 'Bill Price'
-FROM Employees
-JOIN Orders ON Employees.orderID = Orders.orderID
-JOIN Menu ON Orders.menuID = Menu.menuID
-GROUP BY Employees.employeeID
-ORDER BY SUM(menuPrice*orderQuantity) DESC;
-CALL TP_Q6;
+<img width="530" alt="Screen Shot 2023-03-31 at 9 57 38 PM" src="https://user-images.githubusercontent.com/129555704/229260424-a1c75b97-e0e6-4ce8-bf20-2232fff8b65a.png">
+
 
 
 <img width="213" alt="Q6" src="https://user-images.githubusercontent.com/129557979/229248754-7627607f-5c34-406c-8cd1-ee1dee861787.png">
@@ -146,29 +133,18 @@ CALL TP_Q6;
 # Query 7
 #This query shows how many of each customer who catered had special requirements, and what those requirements were. This allows us to know what meals we should be ready to make in the future. Not all customers will necessarily have what we are serving and we need to be prepared to serve their needs. We were able to do this by using case when and regular expression statements.
 
-CREATE PROCEDURE TP_Q7()
-SELECT 
-	COUNT(CASE WHEN cateringSpecialRequirements REGEXP("Peanut Free") THEN cateringSpecialRequirements END) AS "Allergic", 
-    COUNT(CASE WHEN cateringSpecialRequirements REGEXP("Gluten Free") THEN cateringSpecialRequirements END) AS "Allergic", 
-    COUNT(CASE WHEN cateringSpecialRequirements REGEXP("Vegan") THEN cateringSpecialRequirements END) AS "Allergic",
-	COUNT(CASE WHEN cateringSpecialRequirements REGEXP("Vegetarian") THEN cateringSpecialRequirements END) AS "Allergic",
-    COUNT(CASE WHEN cateringSpecialRequirements REGEXP("Kosher") THEN cateringSpecialRequirements END) AS "Allergic",
-	COUNT(CASE WHEN cateringSpecialRequirements NOT REGEXP("Peanut Free|Gluten Free|Vegan|Vegetarian|Kosher") THEN cateringSpecialRequirements END) AS "Not Allergic"
-FROM Catering;
+<img width="967" alt="Screen Shot 2023-03-31 at 9 58 30 PM" src="https://user-images.githubusercontent.com/129555704/229260448-3797a289-d76b-4c61-9d2f-ab47a0151d0f.png">
+
 
 <img width="294" alt="Q7" src="https://user-images.githubusercontent.com/129557979/229248759-17ceb9f4-c234-4967-b500-bc0e91fb5f51.png">
-CALL TP_Q7;
+
 
 
 # Query 8
 #This query is used to figure out which menu items are ordered the most. It is useful to know this first of all to know the popularity of each item but also for the sake of recommendations. We can tell the customers which items are the most popular. We did this by putting the quantity ordered by each person over the total count of all of the quantities ordered.
 
-CREATE PROCEDURE TP_Q8()
-SELECT menuItemName, CONCAT(ROUND(100*(orderQuantity)/(SELECT COUNT(orderQuantity) FROM Orders),2),("%")) AS 'Percent Ordered'
-FROM Customers 
-JOIN Orders ON Customers.customerID = Orders.customerID
-JOIN Menu ON Orders.menuID = Menu.menuID;
-CALL TP_Q8;
+<img width="1001" alt="Screen Shot 2023-03-31 at 9 59 04 PM" src="https://user-images.githubusercontent.com/129555704/229260475-a537c4e0-bc45-40c2-b606-9f088c449534.png">
+
 
 
 <img width="296" alt="Q8" src="https://user-images.githubusercontent.com/129557979/229248772-721cabe4-e5f8-4dc2-af87-1b9448c3eb22.png">
@@ -177,13 +153,8 @@ CALL TP_Q8;
 # Query 9
 #This query is useful because it allows the manager to see how many reservations we had on a specific day, who it is for, and where they are sitting. By knowing this we can prepare for what we think the specific amount of guests we will have, how we could contact them if we need to, and information we could possibly need to give them such as what table they will be seated at. We did this by listing out the customer name, customer phone, number of guests on the reservations, and tableID. We then had to join customers, reservations, and tables together and say the specific date we were looking for.
 
-CREATE PROCEDURE TP_Q9()
-SELECT resNumOfGuests, customerPhone, customerName, tableID
-FROM Customers
-JOIN Reservations ON Reservations.customerID = Customers.customerID
-JOIN Tables ON Reservations.reservationID = Tables.reservationID
-WHERE resDate = '2022-07-10';
-CALL TP_Q9;
+<img width="548" alt="Screen Shot 2023-03-31 at 9 59 44 PM" src="https://user-images.githubusercontent.com/129555704/229260495-7fcd5266-0dae-42f1-9b34-f3b38f9118f1.png">
+
 
 
 <img width="290" alt="Q9" src="https://user-images.githubusercontent.com/129557979/229248786-3fb03ad3-0934-4f80-a179-88d1023008e2.png">
@@ -191,14 +162,8 @@ CALL TP_Q9;
 # Query 10
 #This query allows us to figure out how many employees we have in each position. By knowing this we can figure out how well we operate with a specific amount of employees. If we are not operating as well as we should and see that one group does not have enough employees and hire more. We did this by using case when statements for each of the different employee types.
 
-CREATE PROCEDURE TP_Q10()
-SELECT 
-COUNT(CASE WHEN employeeTitle REGEXP("Chef") THEN employeeTitle END) AS "Chef", 
-COUNT(CASE WHEN employeeTitle REGEXP("Waiter") THEN employeeTitle END) AS "Waiter", 
-COUNT(CASE WHEN employeeTitle REGEXP("Host") THEN employeeTitle END) AS "Host",
-COUNT(CASE WHEN employeeTitle NOT REGEXP("Chef|Waiter|Host") THEN employeeTitle END) AS "Unknown"
-FROM Employees;
-CALL TP_Q10;
+<img width="790" alt="Screen Shot 2023-03-31 at 10 00 19 PM" src="https://user-images.githubusercontent.com/129555704/229260521-bc7b9c8a-03d9-4828-9d99-1fcdde289813.png">
+
 
 
 <img width="263" alt="Q10" src="https://user-images.githubusercontent.com/129557979/229248791-d29fb746-5d16-4fd4-8c2f-9dc438cdc590.png">
