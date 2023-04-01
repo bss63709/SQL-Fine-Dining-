@@ -86,15 +86,9 @@ Customers has a one to many relationship with Reservations and Orders. A particu
 # Query 2
 #This query allows us to know what ingredients go into each of the catering menu items. This is because the catering menu is created by the customer. Therefore, by being able to see what ingredients they have requested in the past, we can prepare for possible future catering needs. We did this by having the name of the meal and the ingredients in the select statement, and then ordered by 
 
-CREATE PROCEDURE TP_Q2()
 
-SELECT cmIngredients, cmItemName
+<img width="469" alt="Screen Shot 2023-03-31 at 9 51 40 PM" src="https://user-images.githubusercontent.com/129555704/229260282-9191a975-4696-4416-b76b-d4566d68027e.png">
 
-FROM CateringMenu
-
-ORDER BY cmIngredients DESC;
-
-CALL TP_Q2;
 
 
 <img width="296" alt="Q2" src="https://user-images.githubusercontent.com/129557979/229248721-43d51313-c804-4e6d-b1a4-ce70fcfe4acd.png">
@@ -102,12 +96,8 @@ CALL TP_Q2;
 # Query 3
 #This query shows each of menu items and the maximum amount of each item that was purchased. This allows us to see which of the items are the most popular and which ones we should really focus on in the future. We did this by having a maximum function in the select statement with orderQuantity and also listed the item name. In order to get the query to work we had to join together the Orders table and the Menu table and grouped it by the item name.
 
-CREATE PROCEDURE TP_Q3()
-SELECT MAX(orderQuantity), menuItemName
-FROM Orders
-JOIN Menu ON Orders.menuID = Menu.menuID
-GROUP BY menuItemName; 
-CALL TP_Q3;
+<img width="332" alt="Screen Shot 2023-03-31 at 9 54 50 PM" src="https://user-images.githubusercontent.com/129555704/229260307-62182e7f-7f1d-4f99-9a77-7a9fce7f81e4.png">
+
 
 
 <img width="296" alt="Q3" src="https://user-images.githubusercontent.com/129557979/229248732-65548c80-fdcf-41ef-adf2-3e51d7b75be5.png">
