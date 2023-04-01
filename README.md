@@ -91,9 +91,13 @@ CALL TP_Q0;
 #This query allows us to know what ingredients go into each of the catering menu items. This is because the catering menu is created by the customer. Therefore, by being able to see what ingredients they have requested in the past, we can prepare for possible future catering needs. We did this by having the name of the meal and the ingredients in the select statement, and then ordered by 
 
 CREATE PROCEDURE TP_Q2()
+
 SELECT cmIngredients, cmItemName
+
 FROM CateringMenu
+
 ORDER BY cmIngredients DESC;
+
 CALL TP_Q2;
 
 
