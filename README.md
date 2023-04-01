@@ -2,7 +2,7 @@
 SQL fine dining database project
 
 # Members
-Christian Myrie,Ben Satinoff, Josh Berman, Chandler Denton 
+Christian Myrie,Ben Satinoff, Josh Berman, Chandler Denton, Group 21482_5
 
 # About Us
 We’re an upscale, fine dining restaurant that is reservation only. We occasionally lease out our space for guests to host events and entertainment, and we also offer catering services. We have six different restaurant locations. Our data model displays the functions of our Fine Dining, reservation only, 6 restaurant franchise. To increase sales for our company and grow our customer demographic, our CEO decided to implement catering services with its own specific menu. Additionally, due to our CEO’s love for nonprofits, he allows one non-profit to use the restaurant to host a nonprofit event, free of charge. In the near future, we look to expand into takeout ordering for our customers as well as bringing our “classic sauce” to grocery stores by branding it.
