@@ -69,7 +69,8 @@ Tables has a many-to-many with Restaurants, forming the Employees associated ent
 
 <img width="331" alt="D10" src="https://user-images.githubusercontent.com/129557979/229250063-d3e8c570-f56c-4ad7-866c-fa1f1a7a1a26.png">
 
-#Customers
+# Customers
+Customers has a one to many relationship with Reservations and Orders. A particular customer can make many reservations and can order as much food an drink as they please. Restaurant has a one-to-many relationship with Customers as many customers can go to only one restaurant due to region constraints. Similarly, Events and Catering have one-to-many relationships with Customers as events and catering events are both one-time, unique occasions with many guests.  
 
 <img width="663" alt="Screen Shot 2023-03-31 at 9 20 31 PM" src="https://user-images.githubusercontent.com/129555704/229258881-6fed6de0-3f26-486d-b8c9-1ea6426ad9e1.png">
 
