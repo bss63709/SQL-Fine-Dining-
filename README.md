@@ -77,12 +77,8 @@ Customers has a one to many relationship with Reservations and Orders. A particu
 # Query 1
 #This query is used to determine the bill total for a particular guess. The manager could use this query to find out how much certain guests are willing to spend when they come to the restaurant
 
-CREATE PROCEDURE TP_Q0()
-SELECT CONCAT(("$"),orderQuantity*menuPrice), customerName
-FROM Customers
-JOIN Orders ON Orders.customerID = Customers.customerID
-JOIN Menu ON Orders.menuID = Menu.menuID;
-CALL TP_Q0;
+
+<img width="469" alt="Screen Shot 2023-03-31 at 9 51 40 PM" src="https://user-images.githubusercontent.com/129555704/229260188-d4fdb929-8c41-4485-9a2d-cbb277990fe3.png">
 
 
 <img width="298" alt="Q1" src="https://user-images.githubusercontent.com/129557979/229248485-b73d8034-fd48-4e44-a871-f8e129ebd02d.png">
