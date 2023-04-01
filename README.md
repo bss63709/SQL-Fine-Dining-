@@ -209,6 +209,11 @@ CALL TP_Q10;
 
 <img width="263" alt="Q10" src="https://user-images.githubusercontent.com/129557979/229248791-d29fb746-5d16-4fd4-8c2f-9dc438cdc590.png">
 
+# Matrix Table
+
+<img width="742" alt="Screen Shot 2023-03-31 at 8 44 37 PM" src="https://user-images.githubusercontent.com/129555704/229257334-a2968dd3-4963-42cd-8637-55cc8e699f29.png">
+
+
 # Total Database Code
 
 USE ns_21482_5;
